@@ -1,0 +1,39 @@
+{
+  "name": "balder-gateway-zwave",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec --compilers ts:ts-node/register src/test/**/*.test.ts",
+    "start": "gulp server",
+    "dev": "gulp watch",
+    "debug": "gulp debug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.0.5",
+    "@types/dotenv": "^4.0.2",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^8.0.53",
+    "@types/restler": "^3.1.5",
+    "chai": "^4.1.2",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemap": "^1.0.1",
+    "gulp-typescript": "^3.2.3",
+    "mocha": "^4.0.1",
+    "standard": "^10.0.3",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.8.0",
+    "tslint-microsoft-contrib": "^5.0.1",
+    "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "mqtt": "^2.14.0",
+    "restler": "^3.4.0"
+  }
+}

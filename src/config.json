@@ -1,0 +1,32 @@
+[
+        {
+            "tcp_incoming": "ZWayVDev_zway_2-0-37",
+            "topic_outgoing": "home/groundfloor/computerroom/switch/value",
+            "topic_incoming": "home/groundfloor/computerroom/switch/value/set",
+            "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37/command/<value>"
+        },
+        {
+            "tcp_incoming": "ZWayVDev_zway_2-0-49-4",
+            "topic_outgoing": "home/groundfloor/computerroom/power/value",
+            "topic_incoming": "home/groundfloor/computerroom/power/value/get",
+            "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37"
+        },
+        {
+            "tcp_incoming": "ZWayVDev_zway_3-0-48-1",
+            "topic_outgoing": "home/groundfloor/computerroom/pir/value",
+            "topic_incoming": "home/groundfloor/computerroom/pir/value/get",
+            "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-48-1"
+        },
+        {
+            "tcp_incoming": "ZWayVDev_zway_3-0-49-1",
+            "topic_outgoing": "home/groundfloor/computerroom/temperature/value",
+            "topic_incoming": "home/groundfloor/computerroom/temperature/value/get",
+            "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-49-1"
+        },
+        {
+            "tcp_incoming": "ZWayVDev_zway_3-0-49-3",
+            "topic_outgoing": "home/groundfloor/computerroom/luminiscense/value",
+            "topic_incoming": "home/groundfloor/computerroom/luminiscense/value/get",
+            "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-49-3"
+        }
+]

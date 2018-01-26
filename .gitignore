@@ -1,3 +1,16 @@
+# emacs 
+*~
+
+# vscode
+.vscode
+
+# dotenv
+.env
+
+# certificates
+*.crt 
+*.key
+
 # Logs
 logs
 *.log
@@ -54,6 +67,4 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
 
