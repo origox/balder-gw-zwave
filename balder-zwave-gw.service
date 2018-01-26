@@ -1,0 +1,15 @@
+[Unit]
+Description=Balder Zwave Gateway Application
+Before=z-way-server.service
+PartOf=z-way-server.service
+
+[Service]
+Restart=always
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/development/balder/balder-gw-zwave
+ExecStart=/usr/bin/node  dist/index.js
+
+
+[Install]
+WantedBy=multi-user.target
