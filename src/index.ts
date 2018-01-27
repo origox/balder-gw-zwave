@@ -42,40 +42,31 @@ mqttClient.start();
 mqttClient.subscribe(topic_incoming);
 
 mqttClient.on('mqtt_request', (topic, message) => {
-    //console.log(`MQTT_REQUEST topic: ${topic} message: ${message}`)
-    //console.log(`SEND HTTP REQ: ${url[topic]}`)
-    let options = { 'username': 'admin', 'password': 'kloker' }
-
-    //let a = url[topic].replace('<value>', (JSON.parse(message).cmd).toString())
-    //console.log(`a = ${JSON.stringify(message)}\n\n`)
-    //console.log(`b =${JSON.parse(message).cmd.toString()}\n\n`)
+    let options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD}
 
     // Create valid url to perform z-wave command
-    let a = url[topic].replace('<value>', JSON.parse(message).cmd.toString())
+    const cmdurl = url[topic].replace('<value>', JSON.parse(message).cmd.toString())
 
-    executeHttp(a, options)
+    executeHttp(CSSMediaRule, options);
 });
 
-// Create TCP/Z-wave Interface 
+// Create TCP/Z-wave Interface
 const socketServer = new SocketServer(parseInt(process.env.RAZBERRY_SOCKET_SRV_PORT));
 socketServer.start();
 
 socketServer.on('zwavedata', (data) => {
     let d = JSON.parse(data);
-    //console.log(`ÌNSPECT - ${inspect(d)}`)
+    // console.log(`ÌNSPECT - ${inspect(d)}`)
     console.log(`recevied zwave data: ${topic_outgoing[d.id]}`);
     mqttClient.send(topic_outgoing[d.id], JSON.stringify(d));
 });
 
 function executeHttp(url, options) {
-    rest.get(url, options).on('complete', function (result) {
+    rest.get(url, options).on('complete', (result) => {
         if (result instanceof Error) {
             console.log('Error:', result.message);
         } else {
-            console.log("Command executed succesfully: " + result.code);
+            console.log(`Command executed succesfully: ${result.code}`);
         }
     });
 }
-
-
-
