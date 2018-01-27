@@ -4,7 +4,9 @@ import * as fs from 'fs';
 import { inspect } from 'util';
 import * as rest from 'restler';
 import { config } from 'dotenv';
-//const dotenv = require("dotenv").config();
+
+// Load environment i.e .env file
+config();
 
 const mqttConfig: MqttClientConfig = {
     'clientId': 'MyclientID',
@@ -12,9 +14,6 @@ const mqttConfig: MqttClientConfig = {
     rejectUnauthorized: false,
     ca: [fs.readFileSync('./dist/ca.crt')]
 };
-
-// Load environment i.e .env file
-config();
 
 // Load config
 let gw_config = [];
@@ -62,10 +61,10 @@ const socketServer = new SocketServer(parseInt(process.env.RAZBERRY_SOCKET_SRV_P
 socketServer.start();
 
 socketServer.on('zwavedata', (data) => {
-    let d = JSON.parse(data)
+    let d = JSON.parse(data);
     //console.log(`ÌNSPECT - ${inspect(d)}`)
-    console.log(`recevied zwave data: ${topic_outgoing[d.id]}`)
-    mqttClient.send(topic_outgoing[d.id], JSON.stringify(d))
+    console.log(`recevied zwave data: ${topic_outgoing[d.id]}`);
+    mqttClient.send(topic_outgoing[d.id], JSON.stringify(d));
 });
 
 function executeHttp(url, options) {

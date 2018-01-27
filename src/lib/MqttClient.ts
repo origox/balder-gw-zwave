@@ -8,7 +8,7 @@ export interface MqttClientConfig {
     //'password': string;
     rejectUnauthorized: boolean;
     ca: any[];
-}
+} 
 
 export class MqttClient extends EventEmitter {
 
@@ -22,16 +22,18 @@ export class MqttClient extends EventEmitter {
     }
 
     public start(): void {
+        console.log(`MQTT START - broker: ${this.config.broker_address}`);
         this.client = connect(this.config.broker_address, {
             clientId: this.config.clientId,
             //username: this.config.username,
             //password: this.config.password
+            port: 8883,
             rejectUnauthorized: this.config.rejectUnauthorized,
             ca: this.config.ca
         });
 
         this.client.on('connect', () => {
-            console.log(`\n\nclient.on.connect\n\n`);
+            console.log(`\n\nclient.on.connect \n\n`);
             // this.client.publish('presence/hello', 'Hellloo mqtt from thing-gw-zwave-mqtt client')
         });
 
@@ -57,7 +59,7 @@ export class MqttClient extends EventEmitter {
     }
 
     public send(topic: string, data: string): void {
-        // console.log(`\n\n jf - sending(${this.client}) \n\n`)
+        console.log(`\n\n jf - sending(${this.config.clientId}) topic:${topic} data: ${data}\n\n`)
         this.client.publish(topic, data, (err) => {
             console.log(`Zwave -> mqtt publish - ${topic} - err: ${err}`);
         });
