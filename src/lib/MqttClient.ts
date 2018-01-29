@@ -4,11 +4,12 @@ import { EventEmitter } from 'events';
 export interface MqttClientConfig {
     'clientId': string;
     'broker_address': string;
-    //'username': string;
+    gatewaytype: string;
+    gatewayid: string;
     //'password': string;
     rejectUnauthorized: boolean;
     ca: any[];
-} 
+}
 
 export class MqttClient extends EventEmitter {
 
@@ -16,8 +17,8 @@ export class MqttClient extends EventEmitter {
 
     constructor(private config: MqttClientConfig) {
         super();
-        this.config.clientId = config.clientId;
-        this.config.broker_address = config.broker_address;
+        //this.config.clientId = config.clientId;
+        //this.config.broker_address = config.broker_address;
         //this.config.password = config.password;
     }
 
@@ -43,12 +44,12 @@ export class MqttClient extends EventEmitter {
         });
 
         this.client.on('message', (topic, message) => {
-            // message is Buffer
+            // message is Buffer 
             console.log(message.toString());
             this.emit('mqtt_request', topic, message.toString());
             //this.client.end()
         });
-    }
+    } 
 
     public subscribe(topics: string[]) {
         const len = topics.length;
@@ -63,6 +64,22 @@ export class MqttClient extends EventEmitter {
         this.client.publish(topic, data, (err) => {
             console.log(`Zwave -> mqtt publish - ${topic} - err: ${err}`);
         });
+    }
+
+    public publishGatewayEvent(eventType: string, eventFormat: string, payload: string) {
+        this.publishEvent(this.config.gatewaytype, this.config.gatewayid, eventType, eventFormat, payload);
+    }
+
+    public publisDeviceEvent(deviceType: string, deviceId: string, eventType: string, eventFormat: string, payload: string) {
+        this.publishEvent(deviceType, deviceId, eventType, eventFormat, payload);
+    }
+
+    private publishEvent(btype: string, id: string, eventType: string, eventFormat: string, payload: string ) {
+        const topic = `ba-1/type/${btype}/id/${id}/evt/${eventType}/fmt/${eventFormat}`;
+        const pay = JSON.stringify(payload);
+        console.log(`publishEvent - topic: ${topic}, payload: ${pay}`);
+        this.send(topic, pay);
+
     }
 
 }

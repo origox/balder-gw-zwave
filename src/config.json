@@ -1,29 +1,39 @@
 [
         {
+            "deviceid": "switch0001",
+            "devicetype": "actuator",
             "tcp_incoming": "ZWayVDev_zway_2-0-37",
             "topic_outgoing": "home/groundfloor/computerroom/switch/value",
             "topic_incoming": "home/groundfloor/computerroom/switch/value/set",
             "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37/command/<value>"
         },
         {
+            "deviceid": "powermeter0001",
+            "devicetype": "sensor",
             "tcp_incoming": "ZWayVDev_zway_2-0-49-4",
             "topic_outgoing": "home/groundfloor/computerroom/power/value",
             "topic_incoming": "home/groundfloor/computerroom/power/value/get",
             "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37"
         },
         {
+            "deviceid": "pir0001",
+            "devicetype": "alarm",
             "tcp_incoming": "ZWayVDev_zway_3-0-48-1",
             "topic_outgoing": "home/groundfloor/computerroom/pir/value",
             "topic_incoming": "home/groundfloor/computerroom/pir/value/get",
             "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-48-1"
         },
         {
+            "deviceid": "temperature0001",
+            "devicetype": "sensor",
             "tcp_incoming": "ZWayVDev_zway_3-0-49-1",
             "topic_outgoing": "home/groundfloor/computerroom/temperature/value",
             "topic_incoming": "home/groundfloor/computerroom/temperature/value/get",
             "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_3-0-49-1"
         },
         {
+            "deviceid": "lumen0001",
+            "devicetype": "sensor",
             "tcp_incoming": "ZWayVDev_zway_3-0-49-3",
             "topic_outgoing": "home/groundfloor/computerroom/luminiscense/value",
             "topic_incoming": "home/groundfloor/computerroom/luminiscense/value/get",
