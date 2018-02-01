@@ -18,24 +18,24 @@ const mqttConfig: MqttClientConfig = {
 };
 
 // Load config
-let gw_config = [];
-const tcp_incoming = [];
-const topic_outgoing = [];
-const topic_incoming = [];
+let gwConfig = [];
+const tcpIncoming = [];
+const topicOutgoing = [];
+const topicIncoming = [];
 const url = [];
 const sensorid = [];
 const sensorType = [];
 
-gw_config = JSON.parse(fs.readFileSync('./dist/config.json').toString());
-console.log(`jf - ${gw_config}`)
+gwConfig = JSON.parse(fs.readFileSync('./dist/config.json').toString());
+console.log(`jf - ${gwConfig}`);
 
-for (let i = 0; i < gw_config.length; i++) {
-    let device = gw_config[i];
-    tcp_incoming.push(device.tcp_incoming);
+for (let i = 0; i < gwConfig.length; i++) {
+    const device = gwConfig[i];
+    tcpIncoming.push(device.tcp_incoming);
     console.log(`d: ${device.tcp_incoming} o: ${device.topic_outgoing}`);
-    topic_outgoing[device.tcp_incoming] = device.topic_outgoing;
+    topicOutgoing[device.tcp_incoming] = device.topic_outgoing;
 
-    topic_incoming.push(device.topic_incoming);
+    topicIncoming.push(device.topic_incoming);
     url[device.topic_incoming] = device.url;
 
     sensorid[device.tcp_incoming] = device.deviceid;
@@ -49,10 +49,10 @@ mqttClient.start();
 // Register sensors
 //mqttClient.register(sensorid);
 
-mqttClient.subscribe(topic_incoming);
+mqttClient.subscribe(topicIncoming);
 
 mqttClient.on('mqtt_request', (topic, message) => {
-    let options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD}
+    const options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD};
 
     // Create valid url to perform z-wave command
     const cmdurl = url[topic].replace('<value>', JSON.parse(message).cmd.toString());
@@ -66,13 +66,14 @@ socketServer.start();
 
 socketServer.on('zwavedata', (data) => {
     const d = JSON.parse(data);
-    console.log(`ÌNSPECT - ${inspect(d)}`);
-    console.log(`recevied zwave data: ${topic_outgoing[d.id]}`);
-    //mqttClient.send(topic_outgoing[d.id], JSON.stringify(d));
-    mqttClient.publisDeviceEvent(sensorType[d.id], sensorid[d.id], 'status', 'json', d);
+    const payload = JSON.stringify({level: d.level, scale: d.scale, ts: d.time});
+    console.log(`ÌNSPECT(payload): ${payload}`);
+    //console.log(`recevied zwave data: ${topicOutgoing[d.id]}`);
+    //mqttClient.send(topicOutgoing[d.id], JSON.stringify(d));
+    mqttClient.publisDeviceEvent(sensorType[d.id], sensorid[d.id], 'status', 'json', payload);
 });
 
-function executeHttp(url, options) {
+function executeHttp(url: any, options: any) {
     rest.get(url, options).on('complete', (result) => {
         if (result instanceof Error) {
             console.log('Error:', result.message);

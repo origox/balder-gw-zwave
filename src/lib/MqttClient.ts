@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 
 export interface MqttClientConfig {
     'clientId': string;
-    'broker_address': string;
+    broker_address: string;
     gatewaytype: string;
     gatewayid: string;
     //'password': string;
@@ -44,12 +44,12 @@ export class MqttClient extends EventEmitter {
         });
 
         this.client.on('message', (topic, message) => {
-            // message is Buffer 
+            // message is Buffer
             console.log(message.toString());
             this.emit('mqtt_request', topic, message.toString());
             //this.client.end()
         });
-    } 
+    }
 
     public subscribe(topics: string[]) {
         const len = topics.length;
