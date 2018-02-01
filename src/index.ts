@@ -46,7 +46,7 @@ for (let i = 0; i < gwConfig.length; i++) {
 const mqttClient = new MqttClient(mqttConfig);
 mqttClient.start();
 
-// Register sensors
+// Register sensors 
 //mqttClient.register(sensorid);
 
 mqttClient.subscribe(topicIncoming);
