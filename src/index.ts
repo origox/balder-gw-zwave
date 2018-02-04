@@ -46,7 +46,7 @@ for (let i = 0; i < gwConfig.length; i++) {
 const mqttClient = new MqttClient(mqttConfig);
 mqttClient.start();
 
-// Register sensors 
+// Register sensors  
 //mqttClient.register(sensorid);
 
 mqttClient.subscribe(topicIncoming);
@@ -55,9 +55,11 @@ mqttClient.on('mqtt_request', (topic, message) => {
     const options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD};
 
     // Create valid url to perform z-wave command
-    const cmdurl = url[topic].replace('<value>', JSON.parse(message).cmd.toString());
+    //const cmdurl = url[topic].replace('<value>', JSON.parse(message).cmd.toString());
+    const cmdurl = url[topic].replace('<value>', message);
 
-    executeHttp(CSSMediaRule, options);
+    //executeHttp(CSSMediaRule, options);
+    executeHttp(cmdurl, options);
 });
 
 // Create TCP/Z-wave Interface

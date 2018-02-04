@@ -4,7 +4,7 @@
             "devicetype": "actuator",
             "tcp_incoming": "ZWayVDev_zway_2-0-37",
             "topic_outgoing": "home/groundfloor/computerroom/switch/value",
-            "topic_incoming": "home/groundfloor/computerroom/switch/value/set",
+            "topic_incoming": "ba-1/type/actuator/id/switch0001/cmd/set/fmt/json",
             "url": "http://192.168.1.122:8083/ZAutomation/api/v1/devices/ZWayVDev_zway_2-0-37/command/<value>"
         },
         {
