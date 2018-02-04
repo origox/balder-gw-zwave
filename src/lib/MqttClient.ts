@@ -76,9 +76,9 @@ export class MqttClient extends EventEmitter {
 
     private publishEvent(btype: string, id: string, eventType: string, eventFormat: string, payload: string ) {
         const topic = `ba-1/type/${btype}/id/${id}/evt/${eventType}/fmt/${eventFormat}`;
-        const pay = JSON.stringify(payload);
-        console.log(`publishEvent - topic: ${topic}, payload: ${pay}`);
-        this.send(topic, pay);
+        //const pay = JSON.stringify(payload);
+        console.log(`publishEvent - topic: ${topic}, payload: ${payload}`);
+        this.send(topic, payload);
 
     }
 
