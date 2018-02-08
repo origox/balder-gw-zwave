@@ -1,5 +1,6 @@
 import { MqttClient, MqttClientConfig } from './lib/MqttClient';
 import { SocketServer } from './lib/SocketServer';
+import { RpiMonitor } from './lib/RpiMonitor';
 import * as fs from 'fs';
 import { inspect } from 'util';
 import * as rest from 'restler';
@@ -52,7 +53,7 @@ mqttClient.start();
 mqttClient.subscribe(topicIncoming);
 
 mqttClient.on('mqtt_request', (topic, message) => {
-    const options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD};
+    const options = { 'username': process.env.RAZBERRY_GUI_USERNAME, 'password': process.env.RAZBERRY_GUI_PASSWORD };
 
     // Create valid url to perform z-wave command
     //const cmdurl = url[topic].replace('<value>', JSON.parse(message).cmd.toString());
@@ -68,7 +69,7 @@ socketServer.start();
 
 socketServer.on('zwavedata', (data) => {
     const d = JSON.parse(data);
-    const payload = JSON.stringify({level: d.level, scale: d.scale, ts: d.time});
+    const payload = JSON.stringify({ level: d.level, scale: d.scale, ts: d.time });
     console.log(`ÌNSPECT(payload): ${payload}`);
     //console.log(`recevied zwave data: ${topicOutgoing[d.id]}`);
     //mqttClient.send(topicOutgoing[d.id], JSON.stringify(d));
@@ -84,3 +85,12 @@ function executeHttp(url: any, options: any) {
         }
     });
 }
+
+// Check RPI
+const rpiMonitor = new RpiMonitor();
+rpiMonitor.getCPUTemperature();
+rpiMonitor.on('temperatureUpdate', (time, temp) => {
+    console.log(`temperature update - ${temp}`);
+    mqttClient.publishGatewayEvent('status', 'json',
+        JSON.stringify({ level: temp, scale: '*C', ts: time}));
+});
